@@ -19,16 +19,21 @@ class APIConfig:
 
 @dataclass(frozen=True)
 class ModelConfig:
-    """Model selection and generation parameters."""
     available_models: List[str] = field(default_factory=lambda: [
-        "models/gemini-2.5-flash",
-        "models/gemini-2.5-pro",
-        "models/gemini-2.0-flash",
+        "models/gemini-2.0-flash",      # 1500/day free — use as default
+        "models/gemini-2.5-flash",       # 20/day free
+        "models/gemini-2.5-pro",         # 25/day free
     ])
-    default_model: str = "models/gemini-2.5-flash"
+    default_model: str = "models/gemini-2.0-flash"  # changed to 2.0
     temperature: float = 0.3
     top_p: float = 0.9
-    max_output_tokens: int = 2048
+    max_output_tokens: int = 1024       # reduced from 2048 — saves quota
+
+@dataclass(frozen=True)
+class RateLimitConfig:
+    max_requests_per_minute: int = 10   # stay under 15 RPM free limit
+    max_requests_per_day: int = 1400    # stay under 1500/day with buffer
+    cache_ttl_seconds: int = 3600       # cache answers for 1 hour
 
 
 @dataclass(frozen=True)
@@ -60,11 +65,11 @@ class FileConfig:
 
 @dataclass(frozen=True)
 class AppConfig:
-    """Top-level application configuration."""
     api: APIConfig = field(default_factory=APIConfig)
     model: ModelConfig = field(default_factory=ModelConfig)
     rag: RAGConfig = field(default_factory=RAGConfig)
     file: FileConfig = field(default_factory=FileConfig)
+    rate_limit: RateLimitConfig = field(default_factory=RateLimitConfig)
     app_name: str = "Multimodal RAG Q&A System"
     debug: bool = field(default_factory=lambda: os.getenv("DEBUG", "false").lower() == "true")
 
