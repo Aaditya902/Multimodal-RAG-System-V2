@@ -228,7 +228,6 @@ DEBUG=false
 TEMP_DIR=/tmp/multimodal_rag
 ```
 
-Get a free Gemini API key at **https://aistudio.google.com** — no credit card required.
 
 ### 6. Run the Application
 
