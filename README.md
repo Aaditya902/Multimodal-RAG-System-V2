@@ -1,6 +1,6 @@
 # Multimodal RAG Q&A System (Gemini + FAISS + OCR + Streamlit)
 
-An AI-powered multimodal document question-answering system that allows users to upload **any file type** PDF, Word, PowerPoint, Excel, or Images and ask questions about their content. The system uses a tiered image processing pipeline (OCR first, Gemini Vision as fallback), semantic search (FAISS), and Google Gemini models to provide accurate, context-aware answers, all optimized to run on the **free tier**.
+An AI-powered multimodal document question-answering system that allows users to upload **any file type** PDF, Word, PowerPoint, Excel, or Images and ask questions about their content. The system uses a tiered image processing pipeline (OCR first, Gemini Vision as fallback), semantic search (FAISS), and Google Gemini models to provide accurate, context-aware answers.
 
 ---
 
