@@ -1,13 +1,3 @@
-"""
-ImageCaptioner: describes image chunks for embedding and retrieval.
-
-Processing order (most to least quota-efficient):
-  1. Disk caption cache     → free, instant
-  2. Image filter           → skip junk images
-  3. OCR (Tesseract)        → free, local
-  4. Gemini Vision          → API call, only if OCR fails
-"""
-
 from typing import List, Tuple
 from google import genai
 
@@ -24,11 +14,6 @@ _VISION_PROMPT = (
 
 
 class ImageCaptioner:
-    """
-    Captions image chunks using a tiered free-first approach:
-    cache → filter → OCR → Gemini Vision (last resort only).
-    """
-
     def __init__(
         self,
         model_name: str = config.model.default_model,
@@ -41,15 +26,8 @@ class ImageCaptioner:
         self._filter = ImageFilter()
         self._ocr = self._load_ocr()
 
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
 
     def caption_chunks(self, chunks: List[DocumentChunk]) -> Tuple[List[DocumentChunk], dict]:
-        """
-        Caption all image chunks. Returns (chunks, stats).
-        stats keys: total_images, from_cache, from_ocr, from_vision, skipped
-        """
         stats = {
             "total_images": 0,
             "from_cache":   0,
@@ -102,12 +80,7 @@ class ImageCaptioner:
         return chunks, stats
 
     def set_skip(self, skip: bool) -> None:
-        """Enable or disable captioning entirely."""
         self._skip = skip
-
-    # ------------------------------------------------------------------
-    # Properties
-    # ------------------------------------------------------------------
 
     @property
     def ocr_available(self) -> bool:
@@ -119,16 +92,8 @@ class ImageCaptioner:
         """Number of captions stored in disk cache."""
         return self._cache.size()
 
-    # ------------------------------------------------------------------
-    # Private helpers
-    # ------------------------------------------------------------------
-
     @staticmethod
     def _load_ocr():
-        """
-        Try to load OCR engine. Returns OCREngine instance or None if
-        Tesseract is not installed — graceful degradation, no crash.
-        """
         try:
             from ingestion.ocr_engine import OCREngine
             engine = OCREngine()
@@ -137,10 +102,6 @@ class ImageCaptioner:
             return None
 
     def _run_ocr(self, chunk: DocumentChunk) -> str:
-        """
-        Run OCR on an image chunk.
-        Returns extracted text string, or empty string if OCR failed/insufficient.
-        """
         try:
             from ingestion.ocr_engine import OCRResult
             result, text = self._ocr.extract_text(
@@ -158,7 +119,7 @@ class ImageCaptioner:
         return ""
 
     def _gemini_vision(self, chunk: DocumentChunk) -> str:
-        """Call Gemini Vision — used only when OCR fails or is unavailable."""
+        """Call Gemini Vision, used only when OCR fails or is unavailable."""
         try:
             import base64
             b64 = base64.b64encode(chunk.image_data).decode("utf-8")

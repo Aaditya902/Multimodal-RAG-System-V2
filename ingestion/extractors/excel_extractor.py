@@ -1,15 +1,9 @@
-"""
-ExcelExtractor: extracts tabular data from .xlsx / .xls files.
-"""
-
 from typing import List
 from core.models import DocumentChunk, FileType
 from .base_extractor import BaseExtractor
 
 
 class ExcelExtractor(BaseExtractor):
-    """Extracts sheet data from Excel files as readable text."""
-
     SUPPORTED_EXTENSIONS = ["xlsx", "xls"]
 
     def extract(self, file_path: str) -> List[DocumentChunk]:

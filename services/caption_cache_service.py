@@ -1,9 +1,3 @@
-"""
-CaptionCacheService: persistent disk cache for image captions.
-Same image hash = instant caption, zero API calls.
-Following SRP — only caption caching logic.
-"""
-
 import hashlib
 import json
 import os
@@ -12,11 +6,6 @@ from config import config
 
 
 class CaptionCacheService:
-    """
-    Disk-based cache for Gemini Vision captions.
-    Key = MD5 hash of raw image bytes → never recaption the same image.
-    """
-
     def __init__(self, cache_path: str = ".caption_cache.json") -> None:
         self._path = cache_path
         self._cache: dict = self._load()

@@ -1,5 +1,3 @@
-"""Unit tests for core domain models."""
-
 import pytest
 from core.models import DocumentChunk, FileType, QAResponse, RetrievalResult
 

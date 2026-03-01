@@ -1,5 +1,3 @@
-"""Unit tests for TextChunker."""
-
 import pytest
 from ingestion.chunker import TextChunker
 

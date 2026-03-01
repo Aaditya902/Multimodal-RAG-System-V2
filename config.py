@@ -1,8 +1,3 @@
-"""
-Application configuration following 12-Factor App methodology.
-All config is loaded from environment variables.
-"""
-
 import os
 from dataclasses import dataclass, field
 from typing import List
@@ -13,7 +8,6 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class APIConfig:
-    """API credentials and endpoints."""
     google_api_key: str = field(default_factory=lambda: os.getenv("GOOGLE_API_KEY", ""))
 
 
@@ -38,7 +32,6 @@ class RateLimitConfig:
 
 @dataclass(frozen=True)
 class RAGConfig:
-    """Retrieval-Augmented Generation parameters."""
     max_chunk_size: int = 1000
     chunk_overlap: int = 200
     similarity_threshold: float = 0.3
@@ -48,7 +41,6 @@ class RAGConfig:
 
 @dataclass(frozen=True)
 class FileConfig:
-    """Supported file types and processing settings."""
     supported_extensions: List[str] = field(default_factory=lambda: [
         "pdf", "docx", "doc", "pptx", "ppt", "xlsx", "xls",
         "png", "jpg", "jpeg", "webp", "gif", "bmp", "tiff"
@@ -74,5 +66,4 @@ class AppConfig:
     debug: bool = field(default_factory=lambda: os.getenv("DEBUG", "false").lower() == "true")
 
 
-# Singleton config instance
 config = AppConfig()

@@ -1,7 +1,3 @@
-"""
-PowerPointExtractor: extracts text and slide images from .pptx files.
-"""
-
 import io
 from typing import List
 from core.models import DocumentChunk, FileType
@@ -9,8 +5,6 @@ from .base_extractor import BaseExtractor
 
 
 class PowerPointExtractor(BaseExtractor):
-    """Extracts text and images from PowerPoint (.pptx) files."""
-
     SUPPORTED_EXTENSIONS = ["pptx", "ppt"]
 
     def extract(self, file_path: str) -> List[DocumentChunk]:
@@ -26,7 +20,6 @@ class PowerPointExtractor(BaseExtractor):
             prs = Presentation(file_path)
 
             for slide_num, slide in enumerate(prs.slides, start=1):
-                # --- Text from all shapes ---
                 slide_texts = []
                 for shape in slide.shapes:
                     if shape.has_text_frame:
@@ -34,7 +27,6 @@ class PowerPointExtractor(BaseExtractor):
                             text = para.text.strip()
                             if text:
                                 slide_texts.append(text)
-                    # Tables inside slides
                     if shape.has_table:
                         for row in shape.table.rows:
                             row_text = " | ".join(cell.text.strip() for cell in row.cells)
@@ -51,7 +43,6 @@ class PowerPointExtractor(BaseExtractor):
                     ))
                     chunk_idx += 1
 
-            # --- Embedded images via ZIP ---
             with zipfile.ZipFile(file_path, "r") as zf:
                 image_files = [n for n in zf.namelist() if n.startswith("ppt/media/")]
                 for img_path in image_files:

@@ -1,8 +1,3 @@
-"""
-PDFExtractor: extracts text per-page and embedded images from PDF files.
-Uses pdfplumber for text (better than PyPDF2) and pymupdf for images.
-"""
-
 import io
 from typing import List
 from core.models import DocumentChunk, FileType
@@ -10,8 +5,6 @@ from .base_extractor import BaseExtractor
 
 
 class PDFExtractor(BaseExtractor):
-    """Extracts text and embedded images from PDF files."""
-
     SUPPORTED_EXTENSIONS = ["pdf"]
 
     def extract(self, file_path: str) -> List[DocumentChunk]:
@@ -23,7 +16,6 @@ class PDFExtractor(BaseExtractor):
             import pdfplumber
             import fitz  # PyMuPDF
 
-            # --- Text extraction via pdfplumber ---
             with pdfplumber.open(file_path) as pdf:
                 for page_num, page in enumerate(pdf.pages, start=1):
                     text = page.extract_text() or ""
@@ -40,7 +32,6 @@ class PDFExtractor(BaseExtractor):
                         ))
                         chunk_idx += 1
 
-            # --- Image extraction via PyMuPDF ---
             doc = fitz.open(file_path)
             for page_num in range(len(doc)):
                 page = doc[page_num]
@@ -75,7 +66,6 @@ class PDFExtractor(BaseExtractor):
 
     @staticmethod
     def _extract_tables(page) -> str:
-        """Extract tables from a pdfplumber page as readable text."""
         try:
             tables = page.extract_tables()
             if not tables:

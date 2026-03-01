@@ -1,7 +1,3 @@
-"""
-WordExtractor: extracts text and embedded images from .docx files.
-"""
-
 import io
 from typing import List
 from core.models import DocumentChunk, FileType
@@ -9,8 +5,6 @@ from .base_extractor import BaseExtractor
 
 
 class WordExtractor(BaseExtractor):
-    """Extracts text and images from Word (.docx) documents."""
-
     SUPPORTED_EXTENSIONS = ["docx", "doc"]
 
     def extract(self, file_path: str) -> List[DocumentChunk]:
@@ -25,7 +19,6 @@ class WordExtractor(BaseExtractor):
 
             doc = Document(file_path)
 
-            # --- Text: paragraphs grouped into logical pages (~50 paras) ---
             page_size = 50
             paragraphs = [p.text.strip() for p in doc.paragraphs if p.text.strip()]
 
@@ -41,7 +34,6 @@ class WordExtractor(BaseExtractor):
                     ))
                     chunk_idx += 1
 
-            # --- Tables ---
             for tbl_idx, table in enumerate(doc.tables):
                 rows = [" | ".join(cell.text.strip() for cell in row.cells) for row in table.rows]
                 table_text = "\n".join(rows)
@@ -55,7 +47,6 @@ class WordExtractor(BaseExtractor):
                     ))
                     chunk_idx += 1
 
-            # --- Embedded images via ZIP (docx is a zip) ---
             with zipfile.ZipFile(file_path, "r") as zf:
                 image_files = [n for n in zf.namelist() if n.startswith("word/media/")]
                 for img_path in image_files:

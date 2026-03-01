@@ -1,6 +1,6 @@
 """
 GeminiGenerator: calls the Gemini API with multimodal context to produce answers.
-Implements AnswerGenerator — swap model or provider without touching other layers.
+Implements AnswerGenerator, swap model or provider without touching other layers.
 """
 
 from typing import List
@@ -13,8 +13,6 @@ from config import config
 
 
 class GeminiGenerator(AnswerGenerator):
-    """Generates grounded answers using Gemini with multimodal context."""
-
     def __init__(
         self,
         model_name: str = config.model.default_model,
@@ -25,7 +23,6 @@ class GeminiGenerator(AnswerGenerator):
         self._prompt_builder = prompt_builder or PromptBuilder()
 
     def generate(self, query: str, results: List[RetrievalResult]) -> QAResponse:
-        """Generate a grounded multimodal answer from retrieved context."""
         if not results:
             return self._fallback_response(query)
 

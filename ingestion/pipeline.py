@@ -1,7 +1,3 @@
-"""
-IngestionPipeline: orchestrates file -> chunks pipeline.
-"""
-
 from pathlib import Path
 from typing import List, Tuple
 
@@ -27,10 +23,6 @@ def _build_default_registry() -> ExtractorRegistry:
 
 
 class IngestionPipeline:
-    """
-    Coordinates: file -> extractor -> image captioning -> text chunking -> DocumentChunks.
-    """
-
     def __init__(
         self,
         registry: ExtractorRegistry | None = None,
@@ -42,10 +34,6 @@ class IngestionPipeline:
         self._captioner = captioner or ImageCaptioner()
 
     def process(self, file_path: str) -> Tuple[List[DocumentChunk], dict]:
-        """
-        Full pipeline. Returns (chunks, image_stats).
-        image_stats keys: total_images, from_cache, from_ocr, from_vision, skipped
-        """
         path = Path(file_path)
         ext = path.suffix.lower().lstrip(".")
         extractor = self._registry.get(ext)
@@ -56,13 +44,13 @@ class IngestionPipeline:
                 f"Supported: {self._registry.supported_extensions()}"
             )
 
-        # Step 1: Extract raw chunks (text + images) from file
+        # Extract raw chunks (text + images) from file
         raw_chunks = extractor.extract(file_path)
 
-        # Step 2: Caption image chunks (cache -> filter -> OCR -> Vision)
+        # Caption image chunks (cache -> filter -> OCR -> Vision)
         raw_chunks, img_stats = self._captioner.caption_chunks(raw_chunks)
 
-        # Step 3: Sub-chunk large text blocks for better retrieval granularity
+        # Sub-chunk large text blocks for better retrieval granularity
         final_chunks: List[DocumentChunk] = []
         for chunk in raw_chunks:
             if chunk.is_image:

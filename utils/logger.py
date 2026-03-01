@@ -1,18 +1,10 @@
-"""
-Centralized logger configuration.
-Following 12-Factor: log to stdout as a stream, not to files.
-"""
-
 import logging
 import sys
 from config import config
 
 
 def get_logger(name: str) -> logging.Logger:
-    """
-    Return a named logger with consistent formatting.
-    Usage: logger = get_logger(__name__)
-    """
+
     logger = logging.getLogger(name)
 
     if not logger.handlers:

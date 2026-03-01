@@ -1,9 +1,3 @@
-"""
-OCREngine: extracts text from images using Tesseract OCR.
-Completely free — no API calls. Used before Gemini Vision as first attempt.
-Following SRP — only OCR logic lives here.
-"""
-
 import io
 from typing import Optional, Tuple
 from enum import Enum, auto
@@ -14,16 +8,10 @@ from config import config
 class OCRResult(Enum):
     SUCCESS = auto()       # OCR found meaningful text
     LOW_CONFIDENCE = auto() # OCR ran but text too short/noisy
-    FAILED = auto()        # OCR could not process image
+    FAILED = auto()        
 
 
 class OCREngine:
-    """
-    Wraps Tesseract OCR with preprocessing for better accuracy.
-    
-    Pipeline per image:
-      raw bytes → preprocess (denoise, contrast) → OCR → clean text → result
-    """
 
     def __init__(self) -> None:
         self._available = self._setup_tesseract()
@@ -33,10 +21,7 @@ class OCREngine:
         return self._available
 
     def extract_text(self, image_data: bytes, mime: str = "image/png") -> Tuple[OCRResult, str]:
-        """
-        Run OCR on raw image bytes.
-        Returns (OCRResult, extracted_text).
-        """
+
         if not self._available:
             return OCRResult.FAILED, ""
 
@@ -45,7 +30,6 @@ class OCREngine:
             if image is None:
                 return OCRResult.FAILED, ""
 
-            # Preprocess for better OCR accuracy
             processed = self._preprocess(image)
 
             # Run OCR with multiple configs and pick best result
@@ -62,18 +46,13 @@ class OCREngine:
         except Exception:
             return OCRResult.FAILED, ""
 
-    # ------------------------------------------------------------------
-    # Private helpers
-    # ------------------------------------------------------------------
-
     @staticmethod
     def _setup_tesseract() -> bool:
-        """Configure tesseract path and verify it's available."""
         try:
             import pytesseract
             if config.ocr.tesseract_path:
                 pytesseract.pytesseract.tesseract_cmd = config.ocr.tesseract_path
-            # Quick availability check
+            # availability check
             pytesseract.get_tesseract_version()
             return True
         except Exception:
@@ -100,7 +79,7 @@ class OCREngine:
         from PIL import Image, ImageFilter, ImageEnhance
         import io
 
-        # Upscale if too small — Tesseract works better on larger images
+        # Upscale if too small, Tesseract works better on larger images
         w, h = image.size
         if w < 300 or h < 300:
             scale = max(300 / w, 300 / h, 2.0)

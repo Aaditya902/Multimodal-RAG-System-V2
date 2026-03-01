@@ -1,9 +1,3 @@
-"""
-app.py — Multimodal RAG Q&A System entry point.
-
-Run with: streamlit run app.py
-"""
-
 import streamlit as st
 
 from config import config
@@ -12,13 +6,11 @@ from ui.components import render_sidebar, render_upload_section, render_qa_secti
 
 
 def _init_session() -> None:
-    """Initialize session-scoped RAGService (persists across Streamlit re-runs)."""
     if "rag_service" not in st.session_state:
         st.session_state["rag_service"] = RAGService()
 
 
 def _check_api_key() -> bool:
-    """Validate that the API key is configured."""
     if not config.api.google_api_key:
         st.error(
             "⚠️ **Google API key not found.**  \n"

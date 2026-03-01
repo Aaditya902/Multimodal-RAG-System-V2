@@ -1,9 +1,3 @@
-"""
-UI component functions — each renders one logical section.
-Following SRP: separate functions for separate concerns.
-Following DRY: reusable across pages if app grows.
-"""
-
 import tempfile
 from pathlib import Path
 from typing import Tuple
@@ -19,26 +13,19 @@ from ui.helpers import (
     cleanup_temp_file,
 )
 
-
-# ---------------------------------------------------------------------------
-# Sidebar
-# ---------------------------------------------------------------------------
-
 def render_sidebar(service: RAGService) -> str:
     """Render sidebar with config, quota tracker, cache stats, and index info."""
     with st.sidebar:
         st.header("⚙️ Configuration")
 
-        # --- Model selector ---
         selected_model = st.selectbox(
             "Gemini Model",
             config.model.available_models,
             index=0,
-            help="gemini-2.0-flash has 1500 free requests/day — recommended",
+            help="gemini-2.0-flash has 1500 free requests/day - recommended",
         )
         service.set_model(selected_model)
 
-        # --- API Quota tracker ---
         st.divider()
         st.subheader("📊 API Quota (Free Tier)")
         stats = service.rate_limit_stats
@@ -55,21 +42,19 @@ def render_sidebar(service: RAGService) -> str:
             f"This minute: {stats['rpm_used']} / {stats['rpm_limit']} RPM"
         )
 
-        # --- Answer cache ---
         st.divider()
         st.subheader("⚡ Answer Cache")
         st.metric("Cached answers", service.cache_size)
         st.caption(
             "Repeated questions are answered instantly from cache "
-            "— no API call used."
+            "no API call used."
         )
 
-        # --- Image captioning controls ---
         st.divider()
         st.subheader("🖼️ Image Processing")
 
         if service.ocr_available:
-            st.success("✅ Tesseract OCR active — text images processed free")
+            st.success("✅ Tesseract OCR active, text images processed free")
         else:
             st.warning(
                 "⚠️ Tesseract not found. Images will use Gemini Vision.\n\n"
@@ -87,14 +72,12 @@ def render_sidebar(service: RAGService) -> str:
         service.set_skip_captioning(not caption_enabled)
         st.caption(f"Caption cache: {service.caption_cache_size} images stored on disk")
 
-        # --- Index stats ---
         st.divider()
         st.subheader("🗂️ Index")
         st.write(f"Indexed chunks: **{service.chunk_count}**")
         supported = ", ".join(f".{e}" for e in service.supported_extensions)
         st.caption(f"Supported formats: {supported}")
 
-        # --- Clear button ---
         st.divider()
         if st.button("🗑️ Clear All Documents", use_container_width=True):
             service.reset()
@@ -103,10 +86,6 @@ def render_sidebar(service: RAGService) -> str:
 
     return selected_model
 
-
-# ---------------------------------------------------------------------------
-# Upload section
-# ---------------------------------------------------------------------------
 
 def render_upload_section(service: RAGService) -> None:
     """Render the multi-file upload panel and trigger ingestion."""
@@ -177,8 +156,8 @@ def _display_image_stats(img_stats: dict) -> None:
 
     st.markdown("**🖼️ Image Processing Results:**")
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("⚡ Cached",     cached,   help="Free — from disk cache")
-    c2.metric("🔍 OCR",        from_ocr, help="Free — Tesseract local OCR")
+    c1.metric("⚡ Cached",     cached,   help="Free, from disk cache")
+    c2.metric("🔍 OCR",        from_ocr, help="Free, Tesseract local OCR")
     c3.metric("🤖 Vision API", vision,   help="Gemini API calls used")
     c4.metric("⏭️ Skipped",    skipped,  help="Too small or duplicate")
 
@@ -190,10 +169,6 @@ def _display_image_stats(img_stats: dict) -> None:
             f"({free} / {total} free)"
         )
 
-
-# ---------------------------------------------------------------------------
-# Q&A section
-# ---------------------------------------------------------------------------
 
 def render_qa_section(service: RAGService) -> None:
     """Render the question input and answer display panel."""
@@ -242,7 +217,6 @@ def _handle_query(service: RAGService, query: str) -> None:
 
     st.session_state["query"] = query
 
-    # Rate limited — show friendly message
     if response.error == "rate_limited":
         st.warning(f"⏳ {response.answer}")
         return
@@ -250,17 +224,11 @@ def _handle_query(service: RAGService, query: str) -> None:
     display_answer(response)
     display_retrieved_context(response.results)
 
-    # Show whether answer came from cache
     if response.answer.startswith("*(Cached)*"):
-        st.caption("⚡ This answer was served from cache — no API call used.")
+        st.caption("⚡ This answer was served from cache, no API call used.")
 
-
-# ---------------------------------------------------------------------------
-# Private helpers
-# ---------------------------------------------------------------------------
 
 def _render_example_questions() -> None:
-    """Show one-click example question buttons."""
     st.markdown("**Quick questions:**")
     examples = [
         "What is this document about?",
@@ -280,12 +248,11 @@ def _render_example_questions() -> None:
 
 
 def _render_tips() -> None:
-    """Show usage tips when no documents are uploaded."""
     st.markdown("### 💡 Tips")
     st.markdown(
         "- Upload **PDF, Word, PowerPoint, Excel**, or **image** files\n"
         "- Images inside documents are automatically extracted and read\n"
-        "- **Tesseract OCR** reads text images for free — no API calls\n"
+        "- **Tesseract OCR** reads text images for free, no API calls\n"
         "- Ask specific questions for the most accurate answers\n"
         "- Upload **multiple files** at once and query across all of them\n"
         "- Repeated questions are answered from **cache** instantly"

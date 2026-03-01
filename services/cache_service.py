@@ -1,9 +1,3 @@
-"""
-CacheService: in-memory cache for QA responses.
-Avoids redundant Gemini API calls for repeated/similar questions.
-Following SRP — only caching logic lives here.
-"""
-
 import hashlib
 import time
 from typing import Optional

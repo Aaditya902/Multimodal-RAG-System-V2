@@ -1,8 +1,3 @@
-"""
-UI helper utilities — pure display functions, no business logic.
-Following SRP: each function does exactly one UI thing.
-"""
-
 import base64
 from typing import List
 
@@ -12,7 +7,6 @@ from core.models import QAResponse, RetrievalResult, FileType
 
 
 def confidence_badge(confidence: float) -> str:
-    """Return a colored badge string for the confidence score."""
     if confidence > 0.5:
         return f":green[High ({confidence:.2f})]"
     elif confidence > 0.3:
@@ -21,7 +15,6 @@ def confidence_badge(confidence: float) -> str:
 
 
 def file_type_icon(file_type: FileType) -> str:
-    """Return an emoji icon for a file type."""
     icons = {
         FileType.PDF: "📄",
         FileType.WORD: "📝",
@@ -33,7 +26,6 @@ def file_type_icon(file_type: FileType) -> str:
 
 
 def display_answer(response: QAResponse) -> None:
-    """Render the QA response in the UI."""
     st.markdown("### 📝 Answer")
     if response.error:
         st.error(f"⚠️ Generation error: {response.error}")
@@ -42,7 +34,6 @@ def display_answer(response: QAResponse) -> None:
 
 
 def display_retrieved_context(results: List[RetrievalResult], max_text_len: int = 400) -> None:
-    """Show the retrieved context chunks in an expander."""
     label = f"🔍 Retrieved Context ({len(results)} chunk{'s' if len(results) != 1 else ''} found)"
 
     with st.expander(label):
@@ -78,7 +69,6 @@ def display_retrieved_context(results: List[RetrievalResult], max_text_len: int 
 
 
 def display_indexed_summary(chunks) -> None:
-    """Show a compact summary of what's been indexed."""
     from collections import Counter
     type_counts = Counter(c.file_type for c in chunks)
     image_count = sum(1 for c in chunks if c.is_image)
@@ -97,7 +87,6 @@ def display_indexed_summary(chunks) -> None:
 
 
 def cleanup_temp_file(file_path: str) -> None:
-    """Safely delete a temporary file."""
     import os
     try:
         if os.path.exists(file_path):

@@ -28,7 +28,6 @@ class FileType(Enum):
 
 @dataclass
 class DocumentChunk:
-    """A single retrievable piece of a document."""
     text: str
     source: str                        # Original file name
     page: int = 0
@@ -42,13 +41,11 @@ class DocumentChunk:
     image_description: Optional[str] = None  # Gemini-generated caption
 
     def get_display_text(self) -> str:
-        """Return human-readable content for display."""
         if self.is_image:
             return f"[Image — {self.source} p.{self.page}]: {self.image_description or 'No description'}"
         return self.text
 
     def get_embedding_text(self) -> str:
-        """Return text to use for embedding (images use their description)."""
         if self.is_image and self.image_description:
             return self.image_description
         return self.text
@@ -56,14 +53,12 @@ class DocumentChunk:
 
 @dataclass
 class RetrievalResult:
-    """A retrieved chunk with its similarity score."""
     chunk: DocumentChunk
     similarity: float
 
 
 @dataclass
 class QAResponse:
-    """The final answer returned to the user."""
     answer: str
     confidence: float
     results: List[RetrievalResult] = field(default_factory=list)

@@ -1,8 +1,3 @@
-"""
-PromptBuilder: constructs the multimodal prompt for Gemini.
-Single Responsibility — only builds prompts, doesn't call the API.
-"""
-
 import base64
 from typing import List, Any
 
@@ -10,8 +5,6 @@ from core.models import RetrievalResult
 
 
 class PromptBuilder:
-    """Builds a Gemini-compatible multimodal contents list from retrieved results."""
-
     def build(self, query: str, results: List[RetrievalResult]) -> List[Any]:
         """
         Returns a `contents` list for the Gemini API.

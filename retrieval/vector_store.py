@@ -1,8 +1,3 @@
-"""
-FAISSVectorStore: builds and queries a FAISS index over DocumentChunks.
-Implements the Retriever interface — swap for any other store without changing callers.
-"""
-
 import numpy as np
 from typing import List
 
@@ -12,8 +7,6 @@ from config import config
 
 
 class FAISSVectorStore(Retriever):
-    """FAISS-backed vector store for fast similarity search."""
-
     def __init__(self, embedder, similarity_threshold: float = config.rag.similarity_threshold) -> None:
         self._embedder = embedder
         self._threshold = similarity_threshold
@@ -21,7 +14,6 @@ class FAISSVectorStore(Retriever):
         self._chunks: List[DocumentChunk] = []
 
     def build_index(self, chunks: List[DocumentChunk]) -> None:
-        """Embed all chunks and build the FAISS index."""
         import faiss
 
         self._chunks = chunks
@@ -33,7 +25,6 @@ class FAISSVectorStore(Retriever):
         self._index.add(vectors)
 
     def query(self, text: str, k: int = config.rag.top_k_results) -> List[RetrievalResult]:
-        """Find the k most similar chunks to the query text."""
         if self._index is None or not self._chunks:
             return []
 

@@ -1,7 +1,3 @@
-"""
-ImageExtractor: handles standalone image file uploads.
-"""
-
 from typing import List
 from pathlib import Path
 from core.models import DocumentChunk, FileType
@@ -19,8 +15,6 @@ _MIME_MAP = {
 
 
 class ImageExtractor(BaseExtractor):
-    """Wraps standalone image files into DocumentChunk for multimodal analysis."""
-
     SUPPORTED_EXTENSIONS = list(_MIME_MAP.keys())
 
     def extract(self, file_path: str) -> List[DocumentChunk]:

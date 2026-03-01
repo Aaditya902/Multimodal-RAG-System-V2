@@ -1,8 +1,3 @@
-"""
-RateLimiter: tracks API usage and enforces free tier limits.
-Prevents hitting quota by refusing calls before they fail.
-"""
-
 import time
 from collections import deque
 from typing import Tuple
@@ -10,11 +5,6 @@ from config import config
 
 
 class RateLimiter:
-    """
-    Dual-window rate limiter:
-    - Per-minute: sliding window
-    - Per-day: daily counter with midnight reset
-    """
 
     def __init__(
         self,
@@ -29,10 +19,7 @@ class RateLimiter:
         self._day_start: float = time.time()
 
     def can_proceed(self) -> Tuple[bool, str]:
-        """
-        Check if a request can proceed.
-        Returns (allowed, reason_if_blocked).
-        """
+
         now = time.time()
         self._reset_day_if_needed(now)
         self._clean_minute_window(now)
@@ -51,13 +38,11 @@ class RateLimiter:
         return True, ""
 
     def record_request(self) -> None:
-        """Call this after every successful API call."""
         now = time.time()
         self._minute_window.append(now)
         self._day_count += 1
 
     def stats(self) -> dict:
-        """Return current usage stats for display."""
         now = time.time()
         self._reset_day_if_needed(now)
         self._clean_minute_window(now)

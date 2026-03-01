@@ -1,5 +1,3 @@
-"""Unit tests for ExtractorRegistry."""
-
 import pytest
 from ingestion.extractor_registry import ExtractorRegistry
 from ingestion.extractors.pdf_extractor import PDFExtractor

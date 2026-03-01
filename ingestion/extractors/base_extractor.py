@@ -1,16 +1,9 @@
-"""
-BaseExtractor: shared utilities for all extractors.
-Following DRY — common logic lives here, not duplicated in subclasses.
-"""
-
 from typing import List
 from core.interfaces import DocumentExtractor
 from core.models import DocumentChunk, FileType
 
 
 class BaseExtractor(DocumentExtractor):
-    """Shared helpers for concrete extractors."""
-
     SUPPORTED_EXTENSIONS: List[str] = []
 
     def can_handle(self, file_extension: str) -> bool:

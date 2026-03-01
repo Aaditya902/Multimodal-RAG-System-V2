@@ -1,8 +1,3 @@
-"""
-TextChunker: splits raw text into overlapping DocumentChunks.
-Single Responsibility — only responsible for splitting, not extraction.
-"""
-
 from typing import List
 from core.interfaces import Chunker
 from core.models import DocumentChunk, FileType
@@ -10,8 +5,6 @@ from config import config
 
 
 class TextChunker(Chunker):
-    """Splits text into overlapping chunks for better retrieval coverage."""
-
     def __init__(
         self,
         max_size: int = config.rag.max_chunk_size,
@@ -21,7 +14,6 @@ class TextChunker(Chunker):
         self._overlap = overlap
 
     def chunk(self, text: str, source: str, page: int = 0) -> List[DocumentChunk]:
-        """Split text into overlapping fixed-size chunks."""
         if not text.strip():
             return []
 
@@ -38,7 +30,6 @@ class TextChunker(Chunker):
         ]
 
     def _sliding_window(self, text: str) -> List[str]:
-        """Generate chunks with sliding window overlap."""
         chunks = []
         start = 0
         text_len = len(text)

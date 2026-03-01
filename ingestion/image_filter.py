@@ -1,26 +1,13 @@
-"""
-ImageFilter: filters out images not worth captioning.
-Saves API quota by skipping blank, tiny, or duplicate images.
-Following SRP — only filtering logic.
-"""
-
 import hashlib
 from typing import List
 from core.models import DocumentChunk
 
-
-# Minimum dimensions worth captioning
 MIN_WIDTH = 50
 MIN_HEIGHT = 50
 MIN_BYTES = 1024  # 1KB — anything smaller is likely an icon/bullet
 
 
 class ImageFilter:
-    """
-    Filters image chunks before sending to Gemini Vision.
-    Removes: too small, blank-looking, exact duplicates.
-    """
-
     def __init__(
         self,
         min_bytes: int = MIN_BYTES,
@@ -33,10 +20,6 @@ class ImageFilter:
         self._seen_hashes: set = set()
 
     def filter(self, chunks: List[DocumentChunk]) -> tuple[List[DocumentChunk], int]:
-        """
-        Returns (kept_chunks, skipped_count).
-        Resets duplicate tracker on each call.
-        """
         self._seen_hashes.clear()
         kept = []
         skipped = 0
@@ -58,7 +41,6 @@ class ImageFilter:
         return kept, skipped
 
     def _should_skip(self, chunk: DocumentChunk) -> str:
-        """Return skip reason string, or empty string if image should be captioned."""
         if not chunk.image_data:
             return "no image data"
 
@@ -89,5 +71,5 @@ class ImageFilter:
             if w < self._min_width or h < self._min_height:
                 return f"too small ({w}x{h}px)"
         except Exception:
-            pass  # If PIL fails, don't skip — caption it anyway
+            pass  # If PIL fails, don't skip, caption it anyway
         return ""
