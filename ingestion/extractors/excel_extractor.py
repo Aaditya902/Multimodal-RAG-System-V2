@@ -2,7 +2,6 @@ from typing import List
 from core.models import DocumentChunk, FileType
 from .base_extractor import BaseExtractor
 
-
 class ExcelExtractor(BaseExtractor):
     SUPPORTED_EXTENSIONS = ["xlsx", "xls"]
 

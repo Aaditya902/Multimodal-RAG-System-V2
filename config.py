@@ -14,7 +14,7 @@ class APIConfig:
 @dataclass(frozen=True)
 class ModelConfig:
     available_models: List[str] = field(default_factory=lambda: [
-        "models/gemini-2.0-flash",      # 1500/day free — use as default
+        "models/gemini-2.0-flash",      # 1500/day free - use as default
         "models/gemini-2.5-flash",       # 20/day free
         "models/gemini-2.5-pro",         # 25/day free
     ])

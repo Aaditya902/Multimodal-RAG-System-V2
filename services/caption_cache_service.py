@@ -5,6 +5,7 @@ from typing import Optional
 from config import config
 
 
+
 class CaptionCacheService:
     def __init__(self, cache_path: str = ".caption_cache.json") -> None:
         self._path = cache_path

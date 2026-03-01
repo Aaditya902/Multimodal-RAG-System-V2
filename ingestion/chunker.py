@@ -3,7 +3,6 @@ from core.interfaces import Chunker
 from core.models import DocumentChunk, FileType
 from config import config
 
-
 class TextChunker(Chunker):
     def __init__(
         self,

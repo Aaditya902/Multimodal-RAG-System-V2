@@ -85,7 +85,6 @@ def display_indexed_summary(chunks) -> None:
         )
         st.caption(f"By type: {breakdown}")
 
-
 def cleanup_temp_file(file_path: str) -> None:
     import os
     try:

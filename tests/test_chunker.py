@@ -1,7 +1,6 @@
 import pytest
 from ingestion.chunker import TextChunker
 
-
 def test_empty_text_returns_no_chunks():
     chunker = TextChunker(max_size=100, overlap=20)
     assert chunker.chunk("", source="test.pdf") == []
@@ -12,7 +11,6 @@ def test_short_text_returns_single_chunk():
     chunks = chunker.chunk("Hello world.", source="test.pdf")
     assert len(chunks) == 1
     assert chunks[0].text == "Hello world."
-
 
 def test_long_text_is_split():
     chunker = TextChunker(max_size=50, overlap=10)

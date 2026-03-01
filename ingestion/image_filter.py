@@ -6,7 +6,6 @@ MIN_WIDTH = 50
 MIN_HEIGHT = 50
 MIN_BYTES = 1024  # 1KB — anything smaller is likely an icon/bullet
 
-
 class ImageFilter:
     def __init__(
         self,

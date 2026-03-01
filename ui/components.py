@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Tuple
 
 import streamlit as st
-
 from config import config
 from services.rag_service import RAGService
 from ui.helpers import (

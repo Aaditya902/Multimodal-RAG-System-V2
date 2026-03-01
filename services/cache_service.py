@@ -5,6 +5,7 @@ from core.models import QAResponse
 from config import config
 
 
+
 class CacheService:
     """Simple TTL-based in-memory cache for QA responses."""
 

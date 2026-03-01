@@ -1,5 +1,4 @@
 from typing import List, Tuple
-
 from core.models import DocumentChunk, QAResponse
 from ingestion.pipeline import IngestionPipeline
 from retrieval.embedder import SentenceTransformerEmbedder
@@ -66,38 +65,31 @@ class RAGService:
 
 
     def set_model(self, model_name: str) -> None:
-        """Switch the Gemini model at runtime."""
         self._model_name = model_name
         self._generator.set_model(model_name)
 
 
     def set_skip_captioning(self, skip: bool) -> None:
-        """Enable or disable image captioning (saves API quota when disabled)."""
         self._pipeline.set_skip_captioning(skip)
 
     @property
     def ocr_available(self) -> bool:
-        """True if Tesseract OCR is installed and available."""
         return self._pipeline.ocr_available
 
     @property
     def caption_cache_size(self) -> int:
-        """Number of images cached on disk (never recaptioned)."""
         return self._pipeline.caption_cache_size
 
     @property
     def rate_limit_stats(self) -> dict:
-        """Current API usage stats for display in sidebar."""
         return self._rate_limiter.stats()
 
     @property
     def cache_size(self) -> int:
-        """Number of cached Q&A answers."""
         return self._cache.size()
 
     @property
     def chunk_count(self) -> int:
-        """Total number of indexed chunks."""
         return self._store.chunk_count
 
     @property

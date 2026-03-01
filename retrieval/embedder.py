@@ -4,7 +4,6 @@ import streamlit as st
 from core.interfaces import Embedder
 from config import config
 
-
 class SentenceTransformerEmbedder(Embedder):
     def __init__(self, model_name: str = config.rag.embedding_model_name) -> None:
         self._model_name = model_name

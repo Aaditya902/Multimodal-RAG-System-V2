@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple
 from .models import DocumentChunk, RetrievalResult, QAResponse
 
-
 class DocumentExtractor(ABC):
     @abstractmethod
     def can_handle(self, file_extension: str) -> bool:

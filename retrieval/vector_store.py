@@ -5,7 +5,6 @@ from core.interfaces import Retriever
 from core.models import DocumentChunk, RetrievalResult
 from config import config
 
-
 class FAISSVectorStore(Retriever):
     def __init__(self, embedder, similarity_threshold: float = config.rag.similarity_threshold) -> None:
         self._embedder = embedder

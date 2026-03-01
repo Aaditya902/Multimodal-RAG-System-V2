@@ -1,8 +1,6 @@
 import base64
 from typing import List, Any
-
 from core.models import RetrievalResult
-
 
 class PromptBuilder:
     def build(self, query: str, results: List[RetrievalResult]) -> List[Any]:

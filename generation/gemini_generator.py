@@ -1,8 +1,3 @@
-"""
-GeminiGenerator: calls the Gemini API with multimodal context to produce answers.
-Implements AnswerGenerator, swap model or provider without touching other layers.
-"""
-
 from typing import List
 from google import genai
 

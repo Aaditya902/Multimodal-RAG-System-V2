@@ -27,26 +27,15 @@ An AI-powered multimodal document question-answering system that allows users to
 
 ```bash
 multimodal_rag/
-<<<<<<< HEAD
-├── app.py                              # Main Streamlit entry point
-├── config.py                           # All config from environment variables
-├── requirements.txt                    # Dependencies
-├── .env.example                        # Environment variable template
-=======
 ├── app.py                              
 ├── config.py                           
 ├── requirements.txt                    
 ├── .env.example                        
->>>>>>> d833555 (small changes)
 ├── README.md
 │
 ├── core/
 │   ├── __init__.py
-<<<<<<< HEAD
-│   ├── interfaces.py                   # Abstract base classes (SOLID)
-=======
 │   ├── interfaces.py                   # Abstract base classes
->>>>>>> d833555 (small changes)
 │   └── models.py                       # DocumentChunk, QAResponse, RetrievalResult
 │
 ├── ingestion/
@@ -59,23 +48,6 @@ multimodal_rag/
 │   ├── ocr_engine.py                   # Tesseract OCR with preprocessing
 │   └── extractors/
 │       ├── __init__.py
-<<<<<<< HEAD
-│       ├── base_extractor.py           # Shared factory helpers (DRY)
-│       ├── pdf_extractor.py            # pdfplumber + PyMuPDF
-│       ├── word_extractor.py           # python-docx
-│       ├── pptx_extractor.py           # python-pptx
-│       ├── excel_extractor.py          # openpyxl
-│       └── image_extractor.py          # Pillow raw bytes
-│
-├── retrieval/
-│   ├── __init__.py
-│   ├── embedder.py                     # SentenceTransformer (cached, local)
-│   └── vector_store.py                 # FAISS index (swappable via interface)
-│
-├── generation/
-│   ├── __init__.py
-│   ├── prompt_builder.py               # Multimodal prompt construction
-=======
 │       ├── base_extractor.py           
 │       ├── pdf_extractor.py            
 │       ├── word_extractor.py           
@@ -91,7 +63,6 @@ multimodal_rag/
 ├── generation/
 │   ├── __init__.py
 │   ├── prompt_builder.py               
->>>>>>> d833555 (small changes)
 │   └── gemini_generator.py             # Gemini API call and QAResponse
 │
 ├── services/
@@ -103,21 +74,13 @@ multimodal_rag/
 │
 ├── ui/
 │   ├── __init__.py
-<<<<<<< HEAD
-│   ├── components.py                   # Sidebar, upload, QA sections
-=======
 │   ├── components.py                   
->>>>>>> d833555 (small changes)
 │   └── helpers.py                      # Pure display utilities
 │
 ├── utils/
 │   ├── __init__.py
 │   ├── file_utils.py                   # Temp file handling and validation
-<<<<<<< HEAD
-│   └── logger.py                       # Centralized stdout logging
-=======
 │   └── logger.py                       
->>>>>>> d833555 (small changes)
 │
 └── tests/
     ├── __init__.py
@@ -218,13 +181,8 @@ User Uploads File
 ### 1. Clone Repository
 
 ```bash
-<<<<<<< HEAD
-git clone https://github.com/your-username/multimodal-rag.git
-cd multimodal-rag
-=======
 git clone https://github.com/Aaditya902/Multimodal-RAG-System-V2.git
 cd Multimodal-RAG-System-V2
->>>>>>> d833555 (small changes)
 ```
 
 ### 2. Create Virtual Environment
@@ -245,11 +203,7 @@ pip install -r requirements.txt
 ### 4. Install Tesseract OCR Engine
 
 ```bash
-<<<<<<< HEAD
-# Windows — download and run installer:
-=======
 # Windows - download and run installer:
->>>>>>> d833555 (small changes)
 # https://github.com/UB-Mannheim/tesseract/wiki
 
 # Mac
@@ -308,8 +262,4 @@ Every answer includes a confidence score based on the average similarity of retr
 | 0.3 to 0.5 | Medium confidence — partial context match |
 | Below 0.3 | Low confidence — weak or no context match |
 
-<<<<<<< HEAD
 ---
-=======
----
->>>>>>> d833555 (small changes)

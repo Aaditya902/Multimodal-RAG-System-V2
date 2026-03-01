@@ -13,7 +13,6 @@ _MIME_MAP = {
     "tiff": "image/tiff",
 }
 
-
 class ImageExtractor(BaseExtractor):
     SUPPORTED_EXTENSIONS = list(_MIME_MAP.keys())
 

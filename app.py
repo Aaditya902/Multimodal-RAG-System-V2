@@ -47,6 +47,5 @@ def main() -> None:
     with col_qa:
         render_qa_section(service)
 
-
 if __name__ == "__main__":
     main()

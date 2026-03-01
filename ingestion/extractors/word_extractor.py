@@ -3,7 +3,6 @@ from typing import List
 from core.models import DocumentChunk, FileType
 from .base_extractor import BaseExtractor
 
-
 class WordExtractor(BaseExtractor):
     SUPPORTED_EXTENSIONS = ["docx", "doc"]
 

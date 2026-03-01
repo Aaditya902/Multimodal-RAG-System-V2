@@ -27,10 +27,8 @@ def cleanup_temp_file(file_path: str) -> None:
     except OSError:
         pass
 
-
 def get_file_extension(filename: str) -> str:
     return Path(filename).suffix.lower().lstrip(".")
-
 
 def is_supported_file(filename: str, supported_extensions: list) -> bool:
     return get_file_extension(filename) in supported_extensions

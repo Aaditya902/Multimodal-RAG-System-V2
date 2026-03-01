@@ -1,6 +1,5 @@
 from typing import List, Tuple
 from google import genai
-
 from core.models import DocumentChunk
 from ingestion.image_filter import ImageFilter
 from services.caption_cache_service import CaptionCacheService

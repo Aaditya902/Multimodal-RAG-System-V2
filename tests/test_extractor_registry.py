@@ -3,7 +3,6 @@ from ingestion.extractor_registry import ExtractorRegistry
 from ingestion.extractors.pdf_extractor import PDFExtractor
 from ingestion.extractors.image_extractor import ImageExtractor
 
-
 def test_registered_extractor_is_found():
     registry = ExtractorRegistry()
     registry.register(PDFExtractor())
@@ -22,7 +21,6 @@ def test_multiple_extractors_resolve_correctly():
     registry.register(ImageExtractor())
     assert isinstance(registry.get("pdf"), PDFExtractor)
     assert isinstance(registry.get("png"), ImageExtractor)
-
 
 def test_supported_extensions_aggregated():
     registry = ExtractorRegistry()

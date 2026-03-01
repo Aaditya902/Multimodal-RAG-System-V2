@@ -3,7 +3,6 @@ from enum import Enum, auto
 from typing import List, Optional
 import base64
 
-
 class FileType(Enum):
     PDF = auto()
     WORD = auto()

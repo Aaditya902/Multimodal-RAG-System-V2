@@ -1,7 +1,6 @@
 from typing import List, Optional
 from core.interfaces import DocumentExtractor
 
-
 class ExtractorRegistry:
     def __init__(self) -> None:
         self._extractors: List[DocumentExtractor] = []

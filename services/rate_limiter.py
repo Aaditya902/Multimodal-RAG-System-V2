@@ -5,7 +5,6 @@ from config import config
 
 
 class RateLimiter:
-
     def __init__(
         self,
         rpm_limit: int = config.rate_limit.max_requests_per_minute,

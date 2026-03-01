@@ -2,7 +2,6 @@ from typing import List
 from core.interfaces import DocumentExtractor
 from core.models import DocumentChunk, FileType
 
-
 class BaseExtractor(DocumentExtractor):
     SUPPORTED_EXTENSIONS: List[str] = []
 

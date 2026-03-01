@@ -1,7 +1,6 @@
 import pytest
 from core.models import DocumentChunk, FileType, QAResponse, RetrievalResult
 
-
 def test_file_type_from_extension():
     assert FileType.from_extension("pdf") == FileType.PDF
     assert FileType.from_extension(".docx") == FileType.WORD
@@ -37,11 +36,9 @@ def test_image_chunk_display_text():
     assert "pie chart" in chunk.get_display_text()
     assert "doc.pdf" in chunk.get_display_text()
 
-
 def test_qa_response_is_successful():
     response = QAResponse(answer="The answer is 42.", confidence=0.8)
     assert response.is_successful is True
-
 
 def test_qa_response_with_error():
     response = QAResponse(answer="", confidence=0.0, error="API timeout")

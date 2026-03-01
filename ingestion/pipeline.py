@@ -12,6 +12,7 @@ from ingestion.extractors.excel_extractor import ExcelExtractor
 from ingestion.extractors.image_extractor import ImageExtractor
 
 
+
 def _build_default_registry() -> ExtractorRegistry:
     registry = ExtractorRegistry()
     registry.register(PDFExtractor())
