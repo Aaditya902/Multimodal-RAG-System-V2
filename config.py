@@ -14,21 +14,20 @@ class APIConfig:
 @dataclass(frozen=True)
 class ModelConfig:
     available_models: List[str] = field(default_factory=lambda: [
-        "models/gemini-2.0-flash",      # 1500/day free - use as default
-        "models/gemini-2.5-flash",       # 20/day free
-        "models/gemini-2.5-pro",         # 25/day free
+        "models/gemini-2.0-flash",      
+        "models/gemini-2.5-flash",       
+        "models/gemini-2.5-pro",        
     ])
-    default_model: str = "models/gemini-2.0-flash"  # changed to 2.0
+    default_model: str = "models/gemini-2.5-flash"  
     temperature: float = 0.3
     top_p: float = 0.9
-    max_output_tokens: int = 1024       # reduced from 2048 — saves quota
+    max_output_tokens: int = 1024       
 
 @dataclass(frozen=True)
 class RateLimitConfig:
-    max_requests_per_minute: int = 10   # stay under 15 RPM free limit
-    max_requests_per_day: int = 1400    # stay under 1500/day with buffer
-    cache_ttl_seconds: int = 3600       # cache answers for 1 hour
-
+    max_requests_per_minute: int = 10   
+    max_requests_per_day: int = 1400    
+    cache_ttl_seconds: int = 3600      
 
 @dataclass(frozen=True)
 class RAGConfig:
