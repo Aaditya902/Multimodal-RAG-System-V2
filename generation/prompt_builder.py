@@ -4,10 +4,7 @@ from core.models import RetrievalResult
 
 class PromptBuilder:
     def build(self, query: str, results: List[RetrievalResult]) -> List[Any]:
-        """
-        Returns a `contents` list for the Gemini API.
-        Interleaves text context and base64-encoded images.
-        """
+
         parts: List[Any] = []
 
         # System instruction as first text part
