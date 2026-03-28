@@ -13,8 +13,8 @@ An AI-powered multimodal document question-answering system that allows users to
 - Semantic search using FAISS vector store
 - Local embeddings with Sentence Transformers (no API cost)
 - Answer generation using Google Gemini
-- Persistent caption cache — same image never processed twice
-- In-memory answer cache — repeated questions cost zero API calls
+- Persistent caption cache - same image never processed twice
+- In-memory answer cache - repeated questions cost zero API calls
 - Live API quota dashboard with daily usage tracker
 - Proactive rate limiter to stay within free tier limits
 - Confidence scoring for all responses
