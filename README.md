@@ -143,7 +143,7 @@ User Uploads File
        v
 +----------------+
 |  Gemini API    |  Answer generation
-|                |  gemini-2.0-flash (default)
+|                |  gemini-2.5-flash (default)
 +----------------+
        |
        v
