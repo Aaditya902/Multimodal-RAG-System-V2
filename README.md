@@ -258,7 +258,7 @@ Every answer includes a confidence score based on the average similarity of retr
 
 | Score | Meaning |
 |---|---|
-| Above 0.5 | High confidence — strong context match |
+| Above 0.5 | High confidence - strong context match |
 | 0.3 to 0.5 | Medium confidence — partial context match |
 | Below 0.3 | Low confidence — weak or no context match |
 
